@@ -1,0 +1,119 @@
+vCard - Personal Portfolio
+
+# sidebar
+
+alt = Palti Ramyasri
+Palti Ramyasri
+
+Resume
+CV
+
+Email
+ramyapalti11@gmail.com
+
+LinkedIn
+Ramyasri Palti
+
+GitHub
+[username]
+
+# navbar
+
+About
+Projects
+
+# about
+
+About me
+
+I'm a Software Developer with expertise in distributed systems and machine learning. I enjoy turning complex problems into simple, elegant solutions.
+
+My focus is on building scalable, high-performance systems that solve real-world problems. I work with cutting-edge technologies and contribute to innovative projects in AI and backend development.
+
+
+## Bachelor Thesis
+
+Thesis Title 1
+Description of the first bachelor thesis research work.
+
+Thesis Title 2
+Description of the second bachelor thesis research work.
+
+
+## Projects
+
+Project 1
+Description of first project with key technologies and achievements.
+
+Project 2
+Description of second project with key technologies and achievements.
+
+Project 3
+Description of third project with key technologies and achievements.
+
+Project 4
+Description of fourth project with key technologies and achievements.
+
+More...
+
+
+## Miscellaneous
+
+- Extracurricular activity 1
+- Extracurricular activity 2
+- Extracurricular activity 3
+- Extracurricular activity 4
+- Extracurricular activity 5
+
+
+## clients
+
+Email
+ramyapalti11@gmail.com
+
+LinkedIn
+Ramyasri Palti
+
+GitHub
+[username]
+
+
+
+# projects
+
+Projects
+
+Project 1
+Description of first project with key technologies and achievements.
+
+Project 2
+Description of second project with key technologies and achievements.
+
+Project 3
+Description of third project with key technologies and achievements.
+
+Project 4
+Description of fourth project with key technologies and achievements.
+
+Project 5
+Description of fifth project with key technologies and achievements.
+
+Project 6
+Description of sixth project with key technologies and achievements.
+
+Project 7
+Description of seventh project with key technologies and achievements.
+
+Project 8
+Description of eighth project with key technologies and achievements.
+
+
+
+# cv
+
+CV
+
+Experience
+
+Software Developer II at Goldman Sachs with expertise in distributed systems,
+microservices architecture, and cloud technologies.

@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vCard - Personal Portfolio</title>
+
+  <!--
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
+
+  <!--
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+
+  <!--
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!--
+    - #MAIN
+  -->
+
+  <main>
+
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/my-avatar.png" alt="Palti Ramyasri" width="80">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Palti Ramyasri">Palti Ramyasri</h1>
+          
+          <div class="social-icons">
+            <a href="mailto:ramyapalti11@gmail.com" class="social-icon" title="Email">
+              <ion-icon name="mail-outline"></ion-icon>
+            </a>
+            <a href="https://www.linkedin.com/in/ramyasri-palti-59aba5192/?originalSubdomain=in" target="_blank" class="social-icon" title="LinkedIn">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+            <a href="#" target="_blank" class="social-icon" title="GitHub">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sidebar-info_more">
+
+        <div class="separator"></div>
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <a href="#" class="contact-link" target="_blank">
+
+            <div class="icon-box">
+                <ion-icon name="document-text-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+                <p class="contact-title">Resume</p>
+            </div>
+
+            </a>
+          </li>
+
+          <li class="contact-item">
+            <a href="#" class="contact-link" target="_blank">
+
+            <div class="icon-box">
+                <ion-icon name="document-outline"></ion-icon>
+            </div>
+
+            <div class="contact-info">
+                <p class="contact-title">CV</p>
+            </div>
+
+            </a>
+          </li>
+
+        </ul>
+
+        <div class="separator"></div>
+
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <button class="navbar-link  active" data-nav-link>About</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Projects</button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about  active" data-page="about">
+
+        <header>
+          <h2 class="h2 article-title">About me</h2>
+        </header>
+
+        <section class="about-text">
+          <p>
+              Hello, I am Ramya, a Software Developer II at Goldman Sachs. I graduated with honors in Computer Science and Engineering from IIT Bombay.
+            </p>
+            <p>
+              I am driven by continuous learning and curiosity, actively seeking out new concepts to broaden my perspective. Integrating ideas from diverse fields enables me to approach problems thoughtfully and develop effective, innovative solutions.
+            </p>
+            <p>
+              I am always curious about how intelligence really works, both in machines and in people. Studying advanced ML and NLP at IIT Bombay gave me the theoretical grounding to ask these questions deeply, while building distributed systems at Goldman Sachs taught me how to adapt those ideas to real-world scale and fault-tolerant infrastructure. I’ve come to believe that AI advances when computational scale meets real reasoning. I’m motivated to bridge that gap through thoughtful research and practical engineering.
+          </p>
+        </section>
+
+
+        <!--
+          - service
+        -->
+
+        <section class="service">
+
+          <h3 class="h3 service-title">Bachelor Thesis</h3>
+
+          <ul class="service-list">
+
+            <li class="service-item">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="service-link">
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web design</h4>
+
+                <p class="service-item-text">
+                  The most modern and high-quality design made at a professional level.
+                </p>
+                  <div class="report-link">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="pdf-link">
+                      <ion-icon name="document-outline"></ion-icon>
+                      View Report
+                    </a>
+                  </div>
+              </div>
+
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" target="_blank" rel="noopener noreferrer" class="service-link">
+
+              <div class="service-content-box">
+                <h4 class="h4 service-item-title">Web development</h4>
+
+                <p class="service-item-text">
+                  High-quality development of sites at the professional level.
+                </p>
+                  <div class="report-link">
+                    <a href="#" target="_blank" rel="noopener noreferrer" class="pdf-link">
+                      <ion-icon name="document-outline"></ion-icon>
+                      View Report
+                    </a>
+                  </div>
+              </div>
+
+              </a>
+            </li>
+          </ul>
+
+        </section>
+
+              <section class="service">
+
+                  <h3 class="h3 service-title">Projects</h3>
+
+                  <ul class="service-list">
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+              <div class="service-content-box">
+                  <h4 class="h4 service-item-title">E-Commerce Platform</h4>
+                <p class="service-item-text">
+                    Full-stack web application with payment integration and real-time inventory management.
+                </p>
+              </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+              <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Machine Learning Model</h4>
+                <p class="service-item-text">
+                    NLP-based sentiment analysis system with 95% accuracy on customer reviews.
+                </p>
+              </div>
+              </a>
+            </li>
+
+                      <li class="service-item">
+              <a href="#" class="service-link">
+                          <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Mobile Banking App</h4>
+                              <p class="service-item-text">
+                    Secure iOS and Android application with biometric authentication and transaction tracking.
+                              </p>
+                          </div>
+              </a>
+                      </li>
+
+                      <li class="service-item">
+              <a href="#" class="service-link">
+                          <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Cloud Infrastructure</h4>
+                              <p class="service-item-text">
+                    Scalable microservices architecture deployed on AWS with auto-scaling capabilities.
+                              </p>
+                          </div>
+              </a>
+            </li>
+
+            <li class="service-item" style="display: none;">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Data Visualization Dashboard</h4>
+                  <p class="service-item-text">
+                    Interactive analytics platform built with React and D3.js for real-time data insights.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li class="service-item" style="display: none;">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Blockchain Smart Contracts</h4>
+                  <p class="service-item-text">
+                    Ethereum-based decentralized application for secure digital asset management.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li class="service-item" style="display: none;">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">IoT Monitoring System</h4>
+                  <p class="service-item-text">
+                    Real-time sensor data collection and analysis platform for smart home automation.
+                  </p>
+            </div>
+              </a>
+            </li>
+
+            <li class="service-item" style="display: none;">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">AI Chatbot</h4>
+                  <p class="service-item-text">
+                    Conversational AI assistant powered by GPT models for customer support automation.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+        <div class="more-projects-btn">
+          <button class="btn-yellow" data-nav-link data-target="projects">More...</button>
+        </div>
+
+        <!--
+          - extracurriculars
+        -->
+
+        <section class="extracurriculars">
+
+          <h3 class="h3 extracurriculars-title">Miscellaneous</h3>
+
+          <ul class="extracurriculars-list">
+
+            <li class="extracurriculars-item">
+              • Placeholder extracurricular activity 1
+            </li>
+
+            <li class="extracurriculars-item">
+              • Placeholder extracurricular activity 2
+            </li>
+
+            <li class="extracurriculars-item">
+              • Placeholder extracurricular activity 3
+            </li>
+
+            <li class="extracurriculars-item">
+              • Placeholder extracurricular activity 4
+            </li>
+
+            <li class="extracurriculars-item">
+              • Placeholder extracurricular activity 5
+            </li>
+
+            <li class="extracurriculars-item">
+              • Placeholder extracurricular activity 6
+            </li>
+
+          </ul>
+
+        </section>
+
+
+      </article>
+
+
+
+
+
+
+
+
+
+      <!--
+        - #PORTFOLIO
+      -->
+
+      <article class="portfolio" data-page="projects">
+
+        <header>
+          <h2 class="h2 article-title">Projects</h2>
+        </header>
+
+        <section class="service">
+
+          <ul class="service-list">
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">E-Commerce Platform</h4>
+                  <p class="service-item-text">
+                    Full-stack web application with payment integration and real-time inventory management.
+                  </p>
+                  </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Machine Learning Model</h4>
+                  <p class="service-item-text">
+                    NLP-based sentiment analysis system with 95% accuracy on customer reviews.
+                  </p>
+                  </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Mobile Banking App</h4>
+                  <p class="service-item-text">
+                    Secure iOS and Android application with biometric authentication and transaction tracking.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Cloud Infrastructure</h4>
+                  <p class="service-item-text">
+                    Scalable microservices architecture deployed on AWS with auto-scaling capabilities.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Data Visualization Dashboard</h4>
+                  <p class="service-item-text">
+                    Interactive analytics platform built with React and D3.js for real-time data insights.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">Blockchain Smart Contracts</h4>
+                  <p class="service-item-text">
+                    Ethereum-based decentralized application for secure digital asset management.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">IoT Monitoring System</h4>
+                  <p class="service-item-text">
+                    Real-time sensor data collection and analysis platform for smart home automation.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+            <li class="service-item">
+              <a href="#" class="service-link">
+                <div class="service-content-box">
+                  <h4 class="h4 service-item-title">AI Chatbot</h4>
+                  <p class="service-item-text">
+                    Conversational AI assistant powered by GPT models for customer support automation.
+                  </p>
+                </div>
+              </a>
+            </li>
+
+          </ul>
+
+        </section>
+
+      </article>
+
+
+      <!--
+        - #CV
+      -->
+
+      <article class="cv" data-page="cv">
+
+        <header>
+          <h2 class="h2 article-title">CV</h2>
+        </header>
+
+        <section class="cv-content">
+
+          <div class="cv-item">
+            <h3 class="cv-item-title">Experience</h3>
+            <p class="cv-item-description">
+              Software Developer II at Goldman Sachs with expertise in distributed systems,
+              machine learning, and full-stack development.
+            </p>
+            </div>
+
+          <div class="cv-item">
+            <h3 class="cv-item-title">Education</h3>
+            <p class="cv-item-description">
+              B.Tech in Computer Science and Engineering from IIT Bombay with honors.
+              Advanced studies in Machine Learning and Natural Language Processing.
+            </p>
+          </div>
+
+        </section>
+
+      </article>
+
+
+
+
+
+
+
+
+
+    </div>
+
+  </main>
+
+
+
+
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
