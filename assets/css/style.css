@@ -2076,3 +2076,370 @@ textarea.form-input::-webkit-resizer { display: none; }
   .timeline-text { max-width: 700px; }
 
 }
+
+
+/**
+ * MEDIA CONTAINER - For images and videos in service items
+ */
+
+.service-content-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.media-container {
+  order: -1;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+.media-container img,
+.media-container video {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 8px;
+  display: block;
+}
+
+.media-container video {
+  background: var(--onyx);
+}
+
+
+/**
+ * GALLERY - Consistent media scaling and slideshow
+ */
+
+.gallery .service-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  grid-auto-rows: 1fr;
+}
+
+.gallery .service-item {
+  width: 100%;
+  position: relative;
+  padding: 0;
+  min-height: 350px;
+}
+
+.gallery .service-item::before {
+  border-radius: 14px;
+}
+
+.gallery .service-content-box {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+}
+
+.gallery .media-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 70px;
+  min-height: 200px;
+  overflow: hidden;
+  border-radius: 14px 14px 0 0;
+  background: #000;
+  margin: 0;
+}
+
+.gallery .media-container img,
+.gallery .media-container video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.gallery .slideshow .slides {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Slideshow dots indicator */
+.slideshow-dots {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: opacity 0.3s ease;
+}
+
+/* Hide dots when video controls are visible */
+.media-container:hover .slideshow-dots {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.slideshow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.slideshow-dot:hover {
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.slideshow-dot.active {
+  background: var(--orange-yellow-crayola);
+  transform: scale(1.2);
+}
+
+.gallery .service-item-title {
+  position: absolute;
+  bottom: 35px;
+  left: 0;
+  right: 0;
+  padding: 12px 15px 5px;
+  margin: 0;
+}
+
+.gallery .service-item-text {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0 15px 12px;
+  margin: 0;
+}
+
+/* Mobile: single column */
+@media (max-width: 580px) {
+  .gallery .service-list {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Slideshow styles */
+.slideshow .slides {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slideshow .slide {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease-in-out;
+}
+
+.slideshow .slide:first-child {
+  opacity: 1;
+}
+
+.slideshow .slide.active {
+  opacity: 1;
+}
+
+
+/**
+ * CUSTOM VIDEO PLAYER
+ */
+
+.video-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+}
+
+/* Hide video wrapper when slide is not active */
+.slide:not(.active) .video-wrapper {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.video-wrapper video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Ensure images in slideshow maintain proper size */
+.slideshow img.slide,
+.slideshow video.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 15px 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.video-wrapper:hover .video-controls {
+  opacity: 1;
+}
+
+.video-play-btn {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-play-btn:hover {
+  color: var(--orange-yellow-crayola);
+}
+
+.video-progress {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.3);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+}
+
+.video-progress-bar {
+  height: 100%;
+  background: var(--orange-yellow-crayola);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 0.1s linear;
+}
+
+/* Play icon overlay for videos - DISABLED */
+.video-play-overlay {
+  display: none !important;
+}
+
+/* Hide video wrapper elements when slide is not active */
+.slide:not(.active) .video-wrapper {
+  visibility: hidden;
+}
+
+
+/**
+ * EXPERIENCE PAGE - Single column horizontal rows
+ */
+
+.experience .service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.experience .service-item {
+  width: 100%;
+  max-width: 100%;
+}
+
+
+/**
+ * EXPERIENCE & PROJECTS - Title styling
+ */
+
+.experience .service-item-title,
+.projects .service-item-title {
+  font-size: var(--fs-2);
+  font-weight: var(--fw-400);
+  margin-bottom: 12px;
+  color: var(--white-1);
+}
+
+.experience .service-item-text,
+.projects .service-item-text {
+  margin-top: 8px;
+}
+
+
+/**
+ * TECH STACK - Tags for technologies used
+ */
+
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tech-stack-label {
+  color: var(--light-gray);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-600);
+  margin-right: 4px;
+}
+
+.tech-tag {
+  background: var(--onyx);
+  color: var(--orange-yellow-crayola);
+  font-size: var(--fs-8);
+  font-weight: var(--fw-500);
+  padding: 4px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--jet);
+}
+
+
+/**
+ * COURSE FIELD - For projects
+ */
+
+.course-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.course-label {
+  color: var(--light-gray);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-600);
+}
+
+.course-name {
+  color: var(--orange-yellow-crayola);
+  font-size: var(--fs-7);
+  font-weight: var(--fw-500);
+}
