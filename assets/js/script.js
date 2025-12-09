@@ -180,10 +180,19 @@ function initSlideshows() {
     if (slides.length === 0) return;
     
     let currentSlide = 0;
-    const slideInterval = 5000; // 5 seconds per slide for images
+    const slideInterval = 7000; // 7 seconds per slide for images
     let isVideoPlaying = false;
     let slideshowTimer = null;
     let dots = [];
+    let pendingSlide = null; // Track pending slide change while loading
+    
+    // Get the media container to check loading state
+    const mediaContainer = slidesContainer.closest('.media-container');
+    
+    // Check if loading is complete
+    function isLoadingComplete() {
+      return mediaContainer && mediaContainer.classList.contains('loaded');
+    }
     
     // Create dots indicator if more than 1 slide
     if (slides.length > 1) {
@@ -210,8 +219,17 @@ function initSlideshows() {
     }
     
     // Function to go to specific slide
-    function goToSlide(index) {
+    function goToSlide(index, force = false) {
       if (index === currentSlide) return;
+      
+      // If loading is not complete, don't switch slides automatically
+      // But store the pending slide to switch to after loading
+      if (!force && !isLoadingComplete()) {
+        pendingSlide = index;
+        // Restart timer to try again later
+        startImageTimer();
+        return;
+      }
       
       // Hide current slide
       slides[currentSlide].style.opacity = '0';
@@ -225,6 +243,7 @@ function initSlideshows() {
       
       // Move to target slide
       currentSlide = index;
+      pendingSlide = null;
       
       // Show target slide
       slides[currentSlide].style.opacity = '1';
@@ -251,6 +270,36 @@ function initSlideshows() {
       if (slideshowTimer) clearTimeout(slideshowTimer);
       if (slides.length > 1) {
         slideshowTimer = setTimeout(goToNextSlide, slideInterval);
+      }
+    }
+    
+    // Function to handle pending slides after loading completes
+    function onLoadingComplete() {
+      if (pendingSlide !== null) {
+        goToSlide(pendingSlide, true);
+      } else if (slides[currentSlide].tagName === 'VIDEO') {
+        // If current slide is video, play it now
+        slides[currentSlide].muted = true;
+        slides[currentSlide].play().catch(() => {});
+      }
+    }
+    
+    // Watch for loading complete
+    if (mediaContainer) {
+      // Use MutationObserver to watch for 'loaded' class
+      const observer = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          if (mutation.attributeName === 'class' && mediaContainer.classList.contains('loaded')) {
+            onLoadingComplete();
+            observer.disconnect();
+          }
+        });
+      });
+      observer.observe(mediaContainer, { attributes: true });
+      
+      // Also check if already loaded
+      if (isLoadingComplete()) {
+        onLoadingComplete();
       }
     }
     
@@ -298,7 +347,16 @@ function initSlideshows() {
     // Auto-play first slide if it's a video, otherwise start image timer
     if (slides[0].tagName === 'VIDEO') {
       slides[0].muted = true;
+      // Try to play immediately
       slides[0].play().catch(() => {});
+      // Also try when video is ready to play
+      slides[0].addEventListener('canplay', function onCanPlay() {
+        if (this.classList.contains('active')) {
+          this.muted = true;
+          this.play().catch(() => {});
+        }
+        this.removeEventListener('canplay', onCanPlay);
+      });
     } else if (slides.length > 1) {
       startImageTimer();
     }
@@ -415,16 +473,24 @@ function initVideoPlayers() {
   });
 }
 
-// Gallery loading spinner functionality
+// Gallery loading bar functionality
 function initGalleryLoading() {
   const mediaContainers = document.querySelectorAll('.gallery .media-container');
   
   mediaContainers.forEach(container => {
-    // Add loading spinner
+    // Add loading bar
     const loadingDiv = document.createElement('div');
     loadingDiv.className = 'media-loading';
-    loadingDiv.innerHTML = '<div class="spinner"></div>';
+    loadingDiv.innerHTML = `
+      <div class="loading-bar-container">
+        <div class="loading-bar"></div>
+      </div>
+      <div class="loading-text">Loading...</div>
+    `;
     container.appendChild(loadingDiv);
+    
+    const loadingBar = loadingDiv.querySelector('.loading-bar');
+    const loadingText = loadingDiv.querySelector('.loading-text');
     
     // Get all media elements
     const images = container.querySelectorAll('img');
@@ -433,10 +499,25 @@ function initGalleryLoading() {
     let loadedCount = 0;
     const totalMedia = images.length + videos.length;
     
+    // Update progress bar
+    function updateProgress() {
+      const percent = totalMedia > 0 ? Math.round((loadedCount / totalMedia) * 100) : 100;
+      loadingBar.style.width = percent + '%';
+      loadingText.textContent = percent + '%';
+    }
+    
     function checkAllLoaded() {
       loadedCount++;
+      updateProgress();
+      
       if (loadedCount >= totalMedia) {
         container.classList.add('loaded');
+        // Auto-play active video after loading completes
+        const activeVideo = container.querySelector('.slide.active');
+        if (activeVideo && activeVideo.tagName === 'VIDEO') {
+          activeVideo.muted = true;
+          activeVideo.play().catch(() => {});
+        }
       }
     }
     
@@ -450,8 +531,20 @@ function initGalleryLoading() {
       }
     });
     
-    // Handle video loading
+    // Handle video loading with progress tracking
     videos.forEach(video => {
+      // Track video download progress
+      video.addEventListener('progress', () => {
+        if (video.buffered.length > 0 && video.duration) {
+          const bufferedEnd = video.buffered.end(video.buffered.length - 1);
+          const videoPercent = (bufferedEnd / video.duration) * 100;
+          // Update individual video progress contribution
+          const basePercent = (loadedCount / totalMedia) * 100;
+          const videoContribution = (videoPercent / 100) * (100 / totalMedia);
+          loadingBar.style.width = Math.min(basePercent + videoContribution, 100) + '%';
+        }
+      });
+      
       if (video.readyState >= 3) { // HAVE_FUTURE_DATA or better
         checkAllLoaded();
       } else {
@@ -464,6 +557,12 @@ function initGalleryLoading() {
     // Fallback: remove loading after 10 seconds regardless
     setTimeout(() => {
       container.classList.add('loaded');
+      // Try to play active video on fallback too
+      const activeVideo = container.querySelector('.slide.active');
+      if (activeVideo && activeVideo.tagName === 'VIDEO') {
+        activeVideo.muted = true;
+        activeVideo.play().catch(() => {});
+      }
     }, 10000);
   });
 }
