@@ -415,8 +415,62 @@ function initVideoPlayers() {
   });
 }
 
+// Gallery loading spinner functionality
+function initGalleryLoading() {
+  const mediaContainers = document.querySelectorAll('.gallery .media-container');
+  
+  mediaContainers.forEach(container => {
+    // Add loading spinner
+    const loadingDiv = document.createElement('div');
+    loadingDiv.className = 'media-loading';
+    loadingDiv.innerHTML = '<div class="spinner"></div>';
+    container.appendChild(loadingDiv);
+    
+    // Get all media elements
+    const images = container.querySelectorAll('img');
+    const videos = container.querySelectorAll('video');
+    
+    let loadedCount = 0;
+    const totalMedia = images.length + videos.length;
+    
+    function checkAllLoaded() {
+      loadedCount++;
+      if (loadedCount >= totalMedia) {
+        container.classList.add('loaded');
+      }
+    }
+    
+    // Handle image loading
+    images.forEach(img => {
+      if (img.complete) {
+        checkAllLoaded();
+      } else {
+        img.addEventListener('load', checkAllLoaded);
+        img.addEventListener('error', checkAllLoaded); // Also mark as loaded on error
+      }
+    });
+    
+    // Handle video loading
+    videos.forEach(video => {
+      if (video.readyState >= 3) { // HAVE_FUTURE_DATA or better
+        checkAllLoaded();
+      } else {
+        video.addEventListener('loadeddata', checkAllLoaded);
+        video.addEventListener('canplay', checkAllLoaded);
+        video.addEventListener('error', checkAllLoaded); // Also mark as loaded on error
+      }
+    });
+    
+    // Fallback: remove loading after 10 seconds regardless
+    setTimeout(() => {
+      container.classList.add('loaded');
+    }, 10000);
+  });
+}
+
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
+  initGalleryLoading();
   initSlideshows();
   initVideoPlayers();
 });
