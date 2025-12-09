@@ -180,7 +180,7 @@ function initSlideshows() {
     if (slides.length === 0) return;
     
     let currentSlide = 0;
-    const slideInterval = 3000; // 3 seconds per slide for images
+    const slideInterval = 5000; // 5 seconds per slide for images
     let isVideoPlaying = false;
     let slideshowTimer = null;
     let dots = [];
