@@ -168,3 +168,255 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+
+// Gallery Slideshow functionality
+function initSlideshows() {
+  const slideshows = document.querySelectorAll('.slideshow .slides');
+  
+  slideshows.forEach(slidesContainer => {
+    const slides = slidesContainer.querySelectorAll('.slide');
+    if (slides.length === 0) return;
+    
+    let currentSlide = 0;
+    const slideInterval = 3000; // 3 seconds per slide for images
+    let isVideoPlaying = false;
+    let slideshowTimer = null;
+    let dots = [];
+    
+    // Create dots indicator if more than 1 slide
+    if (slides.length > 1) {
+      const dotsContainer = document.createElement('div');
+      dotsContainer.className = 'slideshow-dots';
+      
+      slides.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.className = 'slideshow-dot' + (index === 0 ? ' active' : '');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+        dots.push(dot);
+      });
+      
+      // Insert dots after the slides container
+      slidesContainer.parentElement.appendChild(dotsContainer);
+    }
+    
+    // Update dots
+    function updateDots() {
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentSlide);
+      });
+    }
+    
+    // Function to go to specific slide
+    function goToSlide(index) {
+      if (index === currentSlide) return;
+      
+      // Hide current slide
+      slides[currentSlide].style.opacity = '0';
+      slides[currentSlide].classList.remove('active');
+      
+      // Pause video if it's a video
+      if (slides[currentSlide].tagName === 'VIDEO') {
+        slides[currentSlide].pause();
+        slides[currentSlide].currentTime = 0;
+      }
+      
+      // Move to target slide
+      currentSlide = index;
+      
+      // Show target slide
+      slides[currentSlide].style.opacity = '1';
+      slides[currentSlide].classList.add('active');
+      updateDots();
+      
+      // Auto-play video if it's a video (muted)
+      if (slides[currentSlide].tagName === 'VIDEO') {
+        slides[currentSlide].muted = true;
+        slides[currentSlide].play().catch(() => {});
+      } else {
+        // For images, set timer for next slide
+        startImageTimer();
+      }
+    }
+    
+    // Function to go to next slide
+    function goToNextSlide() {
+      goToSlide((currentSlide + 1) % slides.length);
+    }
+    
+    // Start timer for image slides
+    function startImageTimer() {
+      if (slideshowTimer) clearTimeout(slideshowTimer);
+      if (slides.length > 1) {
+        slideshowTimer = setTimeout(goToNextSlide, slideInterval);
+      }
+    }
+    
+    // Initialize all slides
+    slides.forEach((slide, index) => {
+      slide.style.opacity = index === 0 ? '1' : '0';
+      
+      // Setup videos
+      if (slide.tagName === 'VIDEO') {
+        slide.muted = true;
+        slide.loop = false; // Don't loop - we'll handle cycling
+        
+        if (index !== 0) {
+          slide.pause();
+          slide.currentTime = 0;
+        }
+        
+        // Track video play state
+        slide.addEventListener('play', () => {
+          isVideoPlaying = true;
+          if (slideshowTimer) clearTimeout(slideshowTimer);
+        });
+        
+        slide.addEventListener('pause', () => {
+          isVideoPlaying = false;
+        });
+        
+        // When video ends, go to next slide
+        slide.addEventListener('ended', () => {
+          isVideoPlaying = false;
+          if (slides.length > 1) {
+            goToNextSlide();
+          } else {
+            // Single video - restart it
+            slide.currentTime = 0;
+            slide.play().catch(() => {});
+          }
+        });
+      }
+    });
+    
+    // Mark first slide as active
+    slides[0].classList.add('active');
+    
+    // Auto-play first slide if it's a video, otherwise start image timer
+    if (slides[0].tagName === 'VIDEO') {
+      slides[0].muted = true;
+      slides[0].play().catch(() => {});
+    } else if (slides.length > 1) {
+      startImageTimer();
+    }
+  });
+}
+
+// Custom Video Player functionality
+function initVideoPlayers() {
+  const videos = document.querySelectorAll('.media-container video');
+  
+  videos.forEach(video => {
+    // Ensure video is muted
+    video.muted = true;
+    video.removeAttribute('controls');
+    
+    // Create wrapper if not already wrapped
+    if (!video.parentElement.classList.contains('video-wrapper')) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'video-wrapper';
+      video.parentNode.insertBefore(wrapper, video);
+      wrapper.appendChild(video);
+      
+      // Create play overlay
+      const playOverlay = document.createElement('div');
+      playOverlay.className = 'video-play-overlay';
+      playOverlay.innerHTML = '<ion-icon name="play"></ion-icon>';
+      wrapper.appendChild(playOverlay);
+      
+      // Create custom controls
+      const controls = document.createElement('div');
+      controls.className = 'video-controls';
+      controls.innerHTML = `
+        <button class="video-play-btn" aria-label="Play/Pause">
+          <ion-icon name="play" class="play-icon"></ion-icon>
+          <ion-icon name="pause" class="pause-icon" style="display:none;"></ion-icon>
+        </button>
+        <div class="video-progress">
+          <div class="video-progress-bar"></div>
+        </div>
+      `;
+      wrapper.appendChild(controls);
+      
+      const playBtn = controls.querySelector('.video-play-btn');
+      const playIcon = controls.querySelector('.play-icon');
+      const pauseIcon = controls.querySelector('.pause-icon');
+      const progressBar = controls.querySelector('.video-progress-bar');
+      const progress = controls.querySelector('.video-progress');
+      
+      // Play/Pause button
+      playBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+      
+      // Click on wrapper to play/pause
+      wrapper.addEventListener('click', () => {
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      });
+      
+      // Update icons on play/pause
+      video.addEventListener('play', () => {
+        playIcon.style.display = 'none';
+        pauseIcon.style.display = 'block';
+        wrapper.classList.add('playing');
+        playOverlay.style.display = 'none';
+      });
+      
+      video.addEventListener('pause', () => {
+        playIcon.style.display = 'block';
+        pauseIcon.style.display = 'none';
+        wrapper.classList.remove('playing');
+        playOverlay.style.display = 'flex';
+      });
+      
+      // Update progress bar
+      video.addEventListener('timeupdate', () => {
+        const percent = (video.currentTime / video.duration) * 100;
+        progressBar.style.width = percent + '%';
+      });
+      
+      // Click on progress bar to seek
+      progress.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const rect = progress.getBoundingClientRect();
+        const percent = (e.clientX - rect.left) / rect.width;
+        video.currentTime = percent * video.duration;
+      });
+      
+      // Auto-play video when it becomes visible (muted)
+      video.muted = true;
+      
+      // For non-slideshow videos, auto-play
+      if (!video.closest('.slideshow')) {
+        video.play().catch(() => {});
+        wrapper.classList.add('playing');
+        playOverlay.style.display = 'none';
+      }
+      
+      // For slideshow videos, check if it's the active slide
+      if (video.closest('.slide.active')) {
+        video.play().catch(() => {});
+        wrapper.classList.add('playing');
+        playOverlay.style.display = 'none';
+      }
+    }
+  });
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  initSlideshows();
+  initVideoPlayers();
+});
