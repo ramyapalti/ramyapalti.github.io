@@ -2150,26 +2150,38 @@ textarea.form-input::-webkit-resizer { display: none; }
   margin: 0 !important;
 }
 
-/* Loading spinner for gallery items */
+/* Loading bar for gallery items */
 .media-loading {
   position: absolute;
-  top: 50%;
+  bottom: 20px;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   z-index: 5;
+  width: 60%;
+  max-width: 200px;
 }
 
-.media-loading .spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(255, 255, 255, 0.2);
-  border-top-color: var(--orange-yellow-crayola);
-  border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+.media-loading .loading-bar-container {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
 }
 
-@keyframes spin {
-  to { transform: rotate(360deg); }
+.media-loading .loading-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--orange-yellow-crayola);
+  border-radius: 2px;
+  transition: width 0.2s ease;
+}
+
+.media-loading .loading-text {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 11px;
+  margin-top: 6px;
 }
 
 .media-container.loaded .media-loading {
